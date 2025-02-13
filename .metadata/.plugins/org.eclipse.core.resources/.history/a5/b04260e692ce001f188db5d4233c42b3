@@ -1,0 +1,20 @@
+package main;
+import java.util.concurrent.Semaphore;
+/**
+ * filosofi: n
+ * posate: n
+ * semafori (oggetti di classe Semaphore): n
+ * 
+ * ogni filosofo ha una posata
+ * ogni filosofo ha fame e, per mangiare, ha bisogno di 2 posate
+ * ogni filosofo è un thread
+ * ogni semaforo deve gestire 2 thread
+ * 
+ * IL MAIN DEVE FARE IL - POSSIBILE (quasi nulla)
+ * 
+ * 
+ */
+
+public class MainSemaforoFilosofi {
+	
+}

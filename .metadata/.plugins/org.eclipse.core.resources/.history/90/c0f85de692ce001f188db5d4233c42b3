@@ -1,0 +1,16 @@
+package main;
+
+public class Filosofo {
+	private StatoFilosofo stato;
+	
+	public Filosofo() {
+		this.stato = StatoFilosofo.PENSA;
+	}
+	
+	public StatoFilosofo getStato() {
+		return this.stato;
+	}
+	public void setStato(StatoFilosofo stato) {
+		this.stato = stato;
+	}
+}

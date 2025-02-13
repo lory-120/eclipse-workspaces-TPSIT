@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module ContoCorrenteFattoDallaProfInClasse_Thread {
+}
