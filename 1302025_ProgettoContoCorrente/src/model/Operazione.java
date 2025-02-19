@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Operazione extends Thread{
+public abstract class Operazione extends Thread {
 	private double importo;
 	private int numOperazione;
 	private ContoCorrente cc;
