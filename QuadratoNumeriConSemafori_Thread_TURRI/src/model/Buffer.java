@@ -23,31 +23,27 @@ public class Buffer {
 	
 	//metodi della funzione
 	public void give(Integer n) throws InterruptedException {
-		try {
-			accessoBufferSemaforo.acquire(); //occupa il buffer
-			buffer.add(n);
-			index++;
-			accessoBufferSemaforo.release(); //rilascia il buffer
-		} catch(InterruptedException e) {
-			throw e;
-		}
+		accessoBufferSemaforo.acquire(); //occupa il buffer
+		buffer.add(n); //sezione critica
+		index++;
+		accessoBufferSemaforo.release(); //rilascia il buffer
 	}
 	
 	public Integer getLast() throws BufferVuotoException, InterruptedException, NoSuchElementException {
-		if(this.isEmpty()) {
-			throw new BufferVuotoException("Il buffer è vuoto.");
-		}
+		accessoBufferSemaforo.acquire(); //occupa il buffer
+		
+		//sezione critica del codice, si accede alla risorsa del buffer
 		try {
-			accessoBufferSemaforo.acquire(); //occupa il buffer
+			if(this.isEmpty()) {
+				throw new BufferVuotoException("Il buffer è vuoto.");
+			}
 			Integer tmp = buffer.lastElement();
 			buffer.remove(index-1);
 			index--;
-			accessoBufferSemaforo.release(); //rilascia il buffer
+			
 			return tmp;
-		} catch(InterruptedException e) {
-			throw e;
-		} catch(NoSuchElementException e) {
-			throw e;
+		} finally {
+			accessoBufferSemaforo.release(); //rilascia il buffer
 		}
 	}	
 	
@@ -55,9 +51,15 @@ public class Buffer {
 		return buffer.isEmpty();
 	}
 	
-	public synchronized void reset() {
-		buffer.removeAllElements();
-		this.index = 0;
+	public void reset() throws InterruptedException {
+		accessoBufferSemaforo.acquire(); //occupa il buffer
+		
+		try { //sezione critica
+			buffer.removeAllElements();
+			this.index = 0;
+		} finally {
+			accessoBufferSemaforo.release(); //rilascia il buffer
+		}
 	}
 	
 }

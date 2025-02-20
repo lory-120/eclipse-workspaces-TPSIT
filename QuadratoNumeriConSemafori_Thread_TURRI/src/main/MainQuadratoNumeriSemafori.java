@@ -26,7 +26,7 @@ public class MainQuadratoNumeriSemafori {
 		Consumatore[] cons = new Consumatore[10];
 		
 		for(int i=0; i<10; i++) {
-			cons[i] = new Consumatore(buffer, 500, i);
+			cons[i] = new Consumatore(buffer, 500+i*10, i);
 			cons[i].start();
 		}
 		

@@ -27,20 +27,31 @@ public class Consumatore extends Thread {
 	
 	
 	//metodi della funzione
+	
+	/*
+	 * - prendi il numero dal buffer
+	 * - se trovi il numero, fai il printSquaredNumber()
+	 * - se trovi null, fai niente
+	*/
 	public void run() {
 		while(true) {
 			try {
-				if(!buffer.isEmpty()) {
-					printSquaredNumber(buffer.getLast());
+				Integer tmp = buffer.getLast();
+				if(tmp != null) {
+					this.printSquaredNumber(tmp);
 					buffer.reset();
 				}
 				Thread.sleep(waitTime);
 			} catch(BufferVuotoException e) {
-				System.out.println(e.getMessage());
+				try {
+					Thread.sleep(waitTime);
+				} catch(InterruptedException e1) {
+					System.out.println("InterruptedExcpetion dopo il buffer vuoto: " + e1.getMessage());
+				}
 			} catch(InterruptedException e) {
-				System.out.println(e.getMessage());
+				System.out.println("InterruptedException: " + e.getMessage());
 			} catch(NoSuchElementException e) {
-				System.out.println(e.getMessage());
+				System.out.println("NoSuchElementException: " + e.getMessage());
 			}
 		}
 	}
