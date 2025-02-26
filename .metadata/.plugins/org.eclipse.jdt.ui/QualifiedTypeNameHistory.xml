@@ -3,4 +3,9 @@
     <fullyQualifiedTypeName name="model.Buffer"/>
     <fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
     <fullyQualifiedTypeName name="java.util.NoSuchElementException"/>
+    <fullyQualifiedTypeName name="java.util.Random"/>
+    <fullyQualifiedTypeName name="utilities.FishingDeniedException"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.ThreadLocalRandom"/>
+    <fullyQualifiedTypeName name="utilities.MercatoVuotoException"/>
+    <fullyQualifiedTypeName name="model.Grossista"/>
 </qualifiedTypeNameHistroy>

@@ -12,7 +12,7 @@ public class MainContoCorrente {
 		int i = 0;
 		
 		while(true) {
-			boolean isVersamento=r.nextBoolean();
+			boolean isVersamento = r.nextBoolean();
 			if(isVersamento) {
 				Versamento v = new Versamento(cc, i++, r.nextDouble()*2000+1);
 				v.start();
