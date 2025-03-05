@@ -8,4 +8,7 @@
     <fullyQualifiedTypeName name="java.util.concurrent.ThreadLocalRandom"/>
     <fullyQualifiedTypeName name="utilities.MercatoVuotoException"/>
     <fullyQualifiedTypeName name="model.Grossista"/>
+    <fullyQualifiedTypeName name="model.MercatoOrtofrutticolo"/>
+    <fullyQualifiedTypeName name="javax.swing.plaf.MenuBarUI"/>
+    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
 </qualifiedTypeNameHistroy>
