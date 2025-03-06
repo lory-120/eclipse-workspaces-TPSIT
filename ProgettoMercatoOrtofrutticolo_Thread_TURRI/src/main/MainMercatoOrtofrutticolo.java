@@ -1,6 +1,6 @@
 package main;
 
-import java.util.concurrent.ThreadLocalRandom;
+//import java.util.concurrent.ThreadLocalRandom;
 import model.*;
 
 public class MainMercatoOrtofrutticolo {
