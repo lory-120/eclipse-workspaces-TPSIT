@@ -16,14 +16,17 @@ public class Parcheggio {
 		String name = Thread.currentThread().getName();
 		boolean wasWaiting = false;
 		
+		queue++;
+		
 		while(postiOccupati == MAX_POSTI) {
 			wasWaiting = true;
-			queue++;
 			System.out.println(name + " si è messo in fila. Auto in fila per parcheggiare: " + queue);
 			wait();
 		}
+		queue--;
+		
+		
 		postiOccupati++;
-		if(wasWaiting) queue--;
 		
 		System.out.println(name + " ha iniziato a parcheggiare.");
 	}
