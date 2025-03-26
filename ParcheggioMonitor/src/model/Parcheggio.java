@@ -14,12 +14,10 @@ public class Parcheggio {
 	
 	public synchronized void park() throws InterruptedException {
 		String name = Thread.currentThread().getName();
-		boolean wasWaiting = false;
 		
 		queue++;
 		
 		while(postiOccupati == MAX_POSTI) {
-			wasWaiting = true;
 			System.out.println(name + " si è messo in fila. Auto in fila per parcheggiare: " + queue);
 			wait();
 		}
