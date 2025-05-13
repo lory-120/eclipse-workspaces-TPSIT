@@ -2,7 +2,17 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="model.GestioneVenditaBiglietti"/>
     <fullyQualifiedTypeName name="java.util.concurrent.locks.ReentrantLock"/>
-    <fullyQualifiedTypeName name="java.lang.InterruptedException"/>
-    <fullyQualifiedTypeName name="java.util.concurrent.ThreadLocalRandom"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.locks.Condition"/>
     <fullyQualifiedTypeName name="java.lang.Thread"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="model.Utente.Utente"/>
+    <fullyQualifiedTypeName name="javax.swing.text.Utilities"/>
+    <fullyQualifiedTypeName name="model.CentraleElettrica"/>
+    <fullyQualifiedTypeName name="model.Utente.GestioneCentraleElettrica"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.ThreadLocalRandom"/>
+    <fullyQualifiedTypeName name="model.Utente.UtenteNormale"/>
+    <fullyQualifiedTypeName name="model.Utente.UtenteUrgente"/>
+    <fullyQualifiedTypeName name="model.Utente.Tecnico"/>
+    <fullyQualifiedTypeName name="model.GestioneCentraleElettrica"/>
+    <fullyQualifiedTypeName name="java.lang.InterruptedException"/>
 </qualifiedTypeNameHistroy>
