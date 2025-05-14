@@ -11,7 +11,7 @@ public class GestioneCentraleElettrica {
 
 	private String nome;
 	private CentraleElettrica centrale;
-	private final int MAX_PRELIEVO;
+	private final int PRELIEVO_MAX;
 	
 	private static final int MIN_WAIT_TIME = 2000;
 	private static final int MAX_WAIT_TIME = 4000;
@@ -28,6 +28,7 @@ public class GestioneCentraleElettrica {
 		this.centrale = centrale;
 		this.centraleInutilizzabile = false;
 		this.centraleInEmergenza = false;
+		this.PRELIEVO_MAX = centrale.getPRELIEVO_MAX();
 	}
 
 
