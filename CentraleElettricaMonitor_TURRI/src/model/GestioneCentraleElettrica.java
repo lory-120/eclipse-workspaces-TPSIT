@@ -19,6 +19,7 @@ public class GestioneCentraleElettrica {
 	private Lock lock = new ReentrantLock();
 	private Condition funzionamentoNormale = lock.newCondition();
 	private Condition funzionamentoDiEmergenza = lock.newCondition();
+	private Condition centraleInManutenzione = lock.newCondition();
 	private boolean centraleInutilizzabile;
 	private boolean centraleInEmergenza;
 	
