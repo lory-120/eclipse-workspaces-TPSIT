@@ -1,51 +1,108 @@
 package model;
 
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+import model.Utente.*;
 
-public class CentraleElettrica extends Thread {
+public class CentraleElettrica {
 
+	//attributi
 	private String nome;
-	private final int produzioneAlSecondo;
-	private int quantita;
+	private final int produzioneAlSecondo; //(Q)
+	private int quantitaDisponibile;
+	private ReentrantLock lock;
+    private Condition condClientiNormali;
+    private Condition condClientiUrgenti;
+    private Condition condTecnico;
+    private boolean manutenzioneInCorso; //se è true, allora vil tecnico deve fare o sta facendo manutenzione
 	
 	private static final int MIN_WAIT_TIME = 1000;
 	private static final int MAX_WAIT_TIME = 2500;
 	
+	//metodo costruttore
 	public CentraleElettrica(String nome, int produzioneAlSecondo) {
-		setName(nome);
+		this.nome = nome;
 		this.produzioneAlSecondo = produzioneAlSecondo;
-	}
-
-
-	public void run() {
-		try {
-			quantita += produzioneAlSecondo;
-			Thread.sleep(1000);
-		} catch(InterruptedException e) {
-			System.out.println(e.getMessage());
-		}
+		this.quantitaDisponibile = produzioneAlSecondo;
+		this.lock = new ReentrantLock();
+		this.condClientiNormali = lock.newCondition();
+		this.condClientiUrgenti = lock.newCondition();
+		this.condTecnico = lock.newCondition();
+		this.manutenzioneInCorso = false;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public void prelevaEnergia(int quantitaRichiesta) {
+	public void richiedi(Utente u) throws InterruptedException {
+		lock.lock();
 		try {
-			for(int i=0; i<=quantitaRichiesta; i++) {
-				System.out.println("Produzione energia richiesta ("+i+"/"+quantitaRichiesta+")...");
-				Thread.sleep(getWaitTime());
+			while(quantitaDisponibile < u.getRichiestaAlSecondo() || manutenzioneInCorso) {
+				System.out.println("L'utente "+u.getName()+" si è messo in attesa.");
+				condClientiNormali.await();
+				condClientiUrgenti.await();
 			}
-		} catch(InterruptedException e) {
-			System.out.println("Produzione energia interrotta: "+e.getMessage());
+			
+			if(u instanceof UtenteUrgente) {
+				System.out.println("Cliente Urgente "+u.getName()+" sta usando "+u.getRichiestaAlSecondo()+" energia.");
+			} else if(u instanceof UtenteNormale) {
+				System.out.println("Cliente "+u.getName()+" sta usando "+u.getRichiestaAlSecondo()+" energia.");
+			} else {
+				throw new RuntimeException("Tipo di utente non riconosciuto: " + u.toString());
+			}
+			
+			this.quantitaDisponibile -= u.getRichiestaAlSecondo();
+		} finally {
+			lock.unlock();
 		}
 	}
+	
+	
+	public void rilascia(Utente u) throws InterruptedException {
+		lock.lock();
+		try {
+			this.quantitaDisponibile += u.getRichiestaAlSecondo();
+			System.out.print((u instanceof UtenteUrgente) ? "Utente urgrnte " : "Utente normale ");
+			System.out.println(u.getName()+" ha rilasciato "+u.getRichiestaAlSecondo()+" energia.");
+			
+			condTecnico.signalAll();
+			condClientiUrgenti.signalAll();
+			condClientiNormali.signalAll();
+		} finally {
+			lock.unlock();
+		}
+	}
+	
+	
+	public void iniziaManutenzione(Tecnico t) throws InterruptedException {
+		lock.lock();
+		try {
+			this.manutenzioneInCorso = true;
+			System.out.println("Il tecnico "+t.getName()+" deve fare manutenzione.");
+			
+			//se questa condizione è vera, allora nessuno sta usando la centrale
+			while(quantitaDisponibile != produzioneAlSecondo) {
+				condTecnico.await();
+			}
+		} finally {
+			lock.unlock();
+		}
+	}
+	
+	
+	public void fineManutenzione(Tecnico t) throws InterruptedException {
+		lock.lock();
+		try {
+			System.out.println("Il tecnico "+t.getName()+" ha terminato la sua manutenzione.");
+			this.manutenzioneInCorso = false;
+			
+			condClientiUrgenti.signalAll();
+			condClientiNormali.signalAll();
+		} finally {
+			lock.unlock();
+		}
+	}
+	
+	
+	
 	
 	public String getNome() {
 		return nome;
@@ -53,13 +110,4 @@ public class CentraleElettrica extends Thread {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getQuantita() {
-		return quantita;
-	}
-	
-	
-	private static int getWaitTime() {
-		return ThreadLocalRandom.current().nextInt(MIN_WAIT_TIME, MAX_WAIT_TIME);
-	}
-
 }

@@ -21,22 +21,25 @@ public class MainCentraleElettrica {
 
 	public static void main(String[] args) {
 
-		CentraleElettrica centrale = new CentraleElettrica("Centrale bella", 10);
-		GestioneCentraleElettrica gestione = new GestioneCentraleElettrica("Gestione fantastica", centrale);
+		CentraleElettrica centrale = new CentraleElettrica("Centrale bella", 50);
 		
+		int i = 0;
 		while(true) {
-			int i = 0;
 			int random = ThreadLocalRandom.current().nextInt(1, 10+1);
+			
 			if(random < 6) {
-				UtenteNormale utente = new UtenteNormale(("Utente normale "+i), gestione);
+				UtenteNormale utente = new UtenteNormale(("Utente normale "+i), getRandomEnergia(), centrale);
 				i++;
 				utente.start();
 			} else if(random >= 6 || random < 10) {
-				UtenteUrgente urgente = new UtenteUrgente(("Utente urgente "+i), gestione);
+				UtenteUrgente urgente = new UtenteUrgente(("Utente urgente "+i), getRandomEnergia(), centrale);
 				i++;
 				urgente.start();
+				
 			} else {
-				Tecnico tecnico = new Tecnico(("Tecnico "+i), gestione);
+				Tecnico tecnico = new Tecnico(("Tecnico "+i), centrale);
+				i++;
+				tecnico.start();
 			}
 			
 			try {
@@ -44,8 +47,13 @@ public class MainCentraleElettrica {
 			} catch(InterruptedException e) {
 				System.out.println("Errore generale: "+e.getMessage());
 			}
+			
 		}
 		
+	}
+	
+	static int getRandomEnergia() {
+		return ThreadLocalRandom.current().nextInt(10, 20+1);
 	}
 
 }

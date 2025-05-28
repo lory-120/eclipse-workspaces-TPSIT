@@ -4,13 +4,8 @@ import model.CentraleElettrica;
 
 public class UtenteUrgente extends Utente {
 
-	public UtenteUrgente(String nome, int richiestaAlSecondo, int richiestaTot, CentraleElettrica g) {
-		super(nome, richiestaAlSecondo, richiestaTot, g);
+	public UtenteUrgente(String nome, int richiestaAlSecondo, CentraleElettrica g) {
+		super(nome, richiestaAlSecondo, g);
 	}
 	
-	@Override
-	public void run() {
-		c.richiediUrgente(this, 1, super.getWaitTime());
-	}
-
 }
