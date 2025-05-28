@@ -1,16 +1,16 @@
 package model.Utente;
 
-import model.GestioneCentraleElettrica;
+import model.CentraleElettrica;
 
 public class UtenteUrgente extends Utente {
 
-	public UtenteUrgente(String nome, GestioneCentraleElettrica g) {
-		super(nome, g);
+	public UtenteUrgente(String nome, int richiestaAlSecondo, int richiestaTot, CentraleElettrica g) {
+		super(nome, richiestaAlSecondo, richiestaTot, g);
 	}
 	
 	@Override
 	public void run() {
-		g.richiediUrgente(this, 1, super.getWaitTime());
+		c.richiediUrgente(this, 1, super.getWaitTime());
 	}
 
 }

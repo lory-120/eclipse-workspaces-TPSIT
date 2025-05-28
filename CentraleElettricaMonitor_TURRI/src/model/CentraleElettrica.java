@@ -26,6 +26,16 @@ public class CentraleElettrica extends Thread {
 		}
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void prelevaEnergia(int quantitaRichiesta) {
 		try {
 			for(int i=0; i<=quantitaRichiesta; i++) {
