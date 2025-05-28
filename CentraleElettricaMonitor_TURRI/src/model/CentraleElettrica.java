@@ -1,6 +1,5 @@
 package model;
 
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import model.Utente.*;
@@ -17,9 +16,7 @@ public class CentraleElettrica {
     private Condition condTecnico;
     private boolean manutenzioneInCorso; //se è true, allora vil tecnico deve fare o sta facendo manutenzione
 	
-	private static final int MIN_WAIT_TIME = 1000;
-	private static final int MAX_WAIT_TIME = 2500;
-	
+    
 	//metodo costruttore
 	public CentraleElettrica(String nome, int produzioneAlSecondo) {
 		this.nome = nome;
@@ -37,8 +34,11 @@ public class CentraleElettrica {
 		try {
 			while(quantitaDisponibile < u.getRichiestaAlSecondo() || manutenzioneInCorso) {
 				System.out.println("L'utente "+u.getName()+" si è messo in attesa.");
-				condClientiNormali.await();
-				condClientiUrgenti.await();
+				if(u instanceof UtenteUrgente) {
+				    condClientiUrgenti.await();
+				} else {
+				    condClientiNormali.await();
+				}
 			}
 			
 			if(u instanceof UtenteUrgente) {
